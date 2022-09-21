@@ -10,8 +10,8 @@ int main(){
 	const int Nmax = 5;
 	int N;
 	
-	printf("\nInput polynomial degree 0-%i", Nmax);
-	scanf("%i", &N);
+	printf("\nInput polynomial degree 0-%i\n", Nmax);
+	scanf("%d", &N);
 	
 	if((N < 0) || (N > Nmax)){
 		printf("\nInvalid Value");
@@ -20,16 +20,16 @@ int main(){
 	
 	double b[N];
 	int i;
-	for(i = 0; i < N; i++){
-		printf("Set b[%i]\n", i);
-		scanf("%i", &b[i]);
+	for(i = 0; i <= N; i++){
+		printf("Set b[%d]\n", i);
+		scanf("%lf", &b[i]);
 	}
 	
 	int numPts = 200;
-	double pts[numPts - 1];
+	double pts[numPts];
 	
 	for(i = 0; i < numPts; i++){
-		pts[i] = i / numPts - 1;
+		pts[i] = i / 100.0 - 1.0;
 	}
 	
 	double y[numPts]; 
@@ -47,33 +47,31 @@ void calcPoly(int N, double b[], double pts[], int numPts, double* y){
 	double phi;
         int k;
 	for(i = 0; i < numPts; i++){
-		float x = pts[i];	
-		for(k = 0; k < N; k++){
+		y[i] = b[0];
+		double x = pts[i];
+		for(k = 1; k <= N; k++){
 			switch(k){
-				case 0:
-					phi = 1;
 				case 1:
-					phi = x;
+					phi = x; break;
 				case 2:
-					phi = 2 * pow(x,2) - 1;
+					phi = 2 * pow(x,2) - 1; break;
 				case 3:
-					phi = 4 * pow(x,3) - 3 * x;
+					phi = 4 * pow(x,3) - 3 * x; break;
 				case 4:
-					phi = 8 * pow(x,4) - 8 * pow(x,2) + 1;
+					phi = 8 * pow(x,4) - 8 * pow(x,2) + 1; break;
 				case 5:
-					phi = 16 * pow(x,5) - 20 * pow(x,3) + 5 * x;
-			
-				y[i] += b[k] * phi;
-			}	
+					phi = 16 * pow(x,5) - 20 * pow(x,3) + 5 * x; break;
+			}
+			y[i] += b[k] * phi;
 		}
 	}
 }
 void writePolly(int numPts, double pts[], double y[]){
 	FILE *fptr;
 	int i;
-	fptr = fopen("U:/CprE424/chebychev1.txt","w");
+	fptr = fopen("C:/Users/caleb/CprE424/Cheby.txt","w");
 	for(i = 0; i<numPts; i++){
-		fprintf(fptr,"%d %d", pts[i],y[i]);
+		fprintf(fptr,"%f\t%f\n", pts[i],y[i]);
 	}
 	fclose(fptr);
 }
