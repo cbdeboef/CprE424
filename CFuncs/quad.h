@@ -1,6 +1,6 @@
 #ifndef __QUAD_H__
 #define __QUAD_H__
-#include <math.h>
+
 typedef struct point point;
 struct point{
 	double x;
@@ -14,7 +14,7 @@ struct quad{
 	point node3;
 	point node4;
 };
-
+/*
 double quad_perimeter(quad q){
         double perim = 0;
 
@@ -72,5 +72,5 @@ double quad_area(quad q){
 
 	return area;
 }
-
+*/
 #endif

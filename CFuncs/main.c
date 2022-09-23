@@ -1,8 +1,14 @@
 #include "quad.h"
 #include <stdio.h>
 #include <math.h>
+//#include "quad_perimeter.c"
+//#include "quad_area.c"
+
 int main(){
 	
+	double quad_perimeter(quad q);
+	double quad_area(quad q);
+
 	quad q;
 
 	printf("Type point 1 of the quadrilateral using the form (x,y)\n");
