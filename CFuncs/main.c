@@ -1,11 +1,9 @@
 #include "quad.h"
 #include <stdio.h>
 #include <math.h>
-//#include "quad_perimeter.c"
-//#include "quad_area.c"
 
 int main(){
-	
+	void quad_angle(quad q);	
 	double quad_perimeter(quad q);
 	double quad_area(quad q);
 
@@ -22,7 +20,7 @@ int main(){
 	
 	printf("%lf\n", quad_perimeter(q));
 	printf("%lf\n", quad_area(q));
+	quad_angle(q);
 
 	return q.node4.x;
-
 }
