@@ -1,0 +1,7 @@
+output.txt: main.exe
+	./main.exe > output.txt
+
+main.exe: main.o quad_perimeter.o quad_area.o quad_angle.o -o main.exe
+
+%.o: %.c
+	gcc -c $<

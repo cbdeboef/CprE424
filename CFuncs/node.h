@@ -1,7 +1,7 @@
 #ifndef __NODE_H__
 #define __NODE_H__
 
-typedef struct node node
+typedef struct node node;
 struct node{
 	int position;
 	int value;

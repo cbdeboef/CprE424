@@ -1,0 +1,27 @@
+CC = gcc
+FFLAGS = -03
+LFLAG =
+OBJECTS = main.o quad_perimeter.o quad_area.o quad_angle.o
+
+.PHONY: clean help
+
+output.txt: main.exe
+	./main.exe > output.txt
+
+main.exe: $(OBJECTS)
+	$(CC) $(LFLAGS) $(OBJECTS) -o main.exe
+
+%.o: %.c
+	$(CC) $(FFLAGS) -c $<
+
+clean:
+	rm -f $(OBJECTS) main.exe output.txt
+
+help:
+	@echo "Valid targets:"
+	@echo "main.exe"
+	@echo "main.o"
+	@echo "quad_perimeter.o"
+	@echo "quad_area.o"
+	@echo "quad_angle.o"
+	@echo "clean: removes *.o, *.txt, and *.exe files"

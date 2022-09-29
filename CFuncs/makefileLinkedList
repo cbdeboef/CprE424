@@ -1,0 +1,11 @@
+OBJECTS = linkedList.o getNumberOfNodes.o generateList.o print.o getKey.o searchList.o deleteList.o
+
+linkedList.exe: $(OBJECTS)
+	gcc $(OBJECTS) -o linkedList.exe
+
+%.o: %.c
+	gcc -c $<
+
+clean:
+	rm -f $(OBJECTS) linkedList.exe
+
