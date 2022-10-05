@@ -1,7 +1,8 @@
 #include "node.h"
 
 int pop(node** top){
-
+	
+	// Look at value on top of stack. Remove it and return the value.
 	int val;
 	node* temp = *top;
 	

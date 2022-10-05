@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 int main(){
+	// Loop through the execute option function and take user input to allow for 
+	// pushing and popping of values. Deletes stack when done
 	
 	node* top = NULL;
 

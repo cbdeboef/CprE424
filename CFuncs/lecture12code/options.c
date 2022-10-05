@@ -3,6 +3,7 @@
 
 void listOptions(){
 	
+	// Lists off options to be input to esecuteOption function. Inputs will be taken in by main function
 	printf("\n Enter one of the following commands:\n");
 	printf("\n 0: List Options");
 	printf("\n 1: Push");
@@ -14,6 +15,8 @@ void listOptions(){
 }
 
 void executeOption(const int option, node** top){
+
+	// Switch command to execute option input by main based off the selecti0on in listOptions
 	int value;
 
 	switch(option){
