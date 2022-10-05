@@ -119,15 +119,16 @@ vector new_vector(const int size){
 	for(int i = 0; i < (size); i++){
 		vec.val[i] = 0.0;
 	}
+	return vec;
 }
 
 void print_vector_full(const vector* vec, char* varname){
 
 	assert(vec->size > 0);
 	printf("\n");
-	printf(" %.100s =/n", &varname[1]);
+	printf(" %.100s =\n", &varname[1]);
 	printf("  |  ");
-	for(int i = 1; i < vec->size; i++){
+	for(int i = 1; i <= vec->size; i++){
 		printf("%10.3e", vgetp(vec,i));
 		if(i < vec->size) {printf(", "); }
 	}
@@ -228,7 +229,7 @@ vector solve(const matrix* A, const vector* b){
 		if(p != i){
 			for(int j = 1; j <= size; j++){
 				double tmp1 = mgetp(A,i,j);
-				mgetp(A,i,j) = mgetp(A,p,j;
+				mgetp(A,i,j) = mgetp(A,p,j);
 				mgetp(A,p,j) = tmp1;
 			}
 			double tmp2 = vgetp(b,i);
@@ -236,7 +237,7 @@ vector solve(const matrix* A, const vector* b){
 			vgetp(b,p) = tmp2;
 
 		}
-		for(int j = i+1; j <= size; j++){
+		for(int j = (i+1); j <= size; j++){
 			double dm = mgetp(A,j,i)/mgetp(A,i,i);
 			for(int k = 1; k <= size; k++){
 				mgetp(A,j,k) = mgetp(A,j,k) - dm * mgetp(A,i,k);
@@ -250,7 +251,7 @@ vector solve(const matrix* A, const vector* b){
 		for(int k = (size-j+1); k <= size; k++){
 			sum = sum + mgetp(A,size-j,k) * vget(x,k);
 		}
-		vget(x,size-j) = (vgetp(v,size-j) - sum) / mgetp(A,size-j, size-j);
+		vget(x,size-j) = (vgetp(b,size-j) - sum) / mgetp(A,size-j, size-j);
 	}
 	return x;
 }

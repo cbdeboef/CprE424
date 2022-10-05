@@ -24,7 +24,7 @@ struct vector{
 #define mgetp(mat,i,j) mat->val[(i-1)*mat->cols+(j-1)]
 #define vget(vec,i) vec.val[(i-1)]
 #define vgetp(vec,i) vec->val[(i-1)]
-#define print_matris(mat) print_matrix_full(mat,#mat);
+#define print_matrix(mat) print_matrix_full(mat,#mat);
 #define print_vector(vec) print_vector_full(vec,#vec);
 #define print_scalar(z) print_scalar_full(z,#z);
 

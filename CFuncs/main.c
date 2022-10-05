@@ -1,26 +1,47 @@
-#include "quad.h"
-#include <stdio.h>
-#include <math.h>
+#include "matrix.h"
 
 int main(){
-	void quad_angle(quad q);	
-	double quad_perimeter(quad q);
-	double quad_area(quad q);
 
-	quad q;
+	matrix A = new_matrix(3, 3);
+	matrix B = new_matrix(3, 3);
 
-	printf("Type point 1 of the quadrilateral using the form (x,y)\n");
-	scanf("%lf %lf", &q.node1.x, &q.node1.y);
-        printf("Type point 2 of the quadrilateral using the form (x,y)\n");
-        scanf("%lf %lf", &q.node2.x, &q.node2.y);
-        printf("Type point 3 of the quadrilateral using the form (x,y)\n");
-        scanf("%lf %lf", &q.node3.x, &q.node3.y);
-        printf("Type point 4 of the quadrilateral using the form (x,y)\n");
-        scanf("%lf %lf", &q.node4.x, &q.node4.y);	
+	A.val = (double[9]) {-2,0,1,-1,7,1,5,-1,1};
+	B.val = (double[9]) {12,10,6,7,2,4,9,1,1};
 	
-	printf("%lf\n", quad_perimeter(q));
-	printf("%lf\n", quad_area(q));
-	quad_angle(q);
+	print_matrix(&A);
+	print_matrix(&B);
 
-	return q.node4.x;
+	matrix Csum  = matrix_add(&A, &B);
+	print_matrix(&Csum);
+	matrix Cdif  = matrix_sub(&A, &B);
+	print_matrix(&Cdif);
+	matrix Cprod = matrix_mult(&A, &B);
+	print_matrix(&Cprod);
+	matrix Cdot  = matrix_dot_mult(&A, &B);
+	print_matrix(&Cdot);
+
+	vector x = new_vector(3);
+	vector y = new_vector(3);
+
+	vget(x,1) = -4;  vget(y,1) = 4;
+	vget(x,2) = -50; vget(y,2) = 2;
+	vget(x,3) = -26; vget(y,3) = 3;
+
+	print_vector(&x);
+	print_vector(&y);
+
+	vector zsum = vector_add(&x, &y);
+	print_vector(&zsum);
+	vector zdiff = vector_sub(&x, &y);
+	print_vector(&zdiff);
+	double zdot = vector_dot_mult(&x, &y);
+	print_scalar(&zdot);
+
+	vector Ay = matrix_vector_mult(&A, &y);
+	print_vector(&Ay);
+
+	vector soln = solve(&A, &x);
+	print_vector(&soln);
+
+	return 0;
 }
