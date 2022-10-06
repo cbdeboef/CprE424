@@ -35,6 +35,7 @@ void print_matrix_full(const matrix* mat, char* varname);
 matrix matrix_add(const matrix* A, const matrix* B);
 matrix matrix_sub(const matrix* A, const matrix* B);
 matrix matrix_mult(const matrix* A, const matrix* B);
+matrix matrix_mult_v2(const matrix* A, const matrix* B);
 matrix matrix_dot_mult(const matrix* A, const matrix* B);
 
 vector new_vector(const int size);

@@ -90,6 +90,34 @@ matrix matrix_mult(const matrix* A, const matrix* B){
         return C;
 }
 
+matrix matrix_mult_v2(const matrix* A, const matrix* B){
+	
+        // Checks dimentions are compatible for multiplication
+        const int rowsA = A->rows; const int rowsB = B->rows;
+        const int colsA = A->cols; const int colsB = B->cols;
+        assert(colsA == rowsB);
+        matrix C = new_matrix(rowsA, colsB);
+	
+	// Create 
+	matrix B_T = new_matrix(rowsB, colsB);
+	for(int i = 0; i <= rowsA; i++){
+		for(int j = 0; j <= colsB; j++){
+			mget(B_T,i,j) = mgetp(B,j,i);
+		}
+	}
+
+        // Performs multiplication of matrix A and matrix B and stores value in matrix C
+        for(int i = 1; i <= rowsA; i++){
+                for(int j = 1; j <= colsB; j++){
+                        for(int k = 1; k<= colsA; k++){
+                                mget(C,i,j) += mgetp(A,i,k) * mgetp(B_T,j,k);
+                        }
+                }
+        }
+
+        return C;
+}
+
 matrix matrix_dot_mult(const matrix* A, const matrix* B){
 
         const int rows = A->rows; 
@@ -255,3 +283,60 @@ vector solve(const matrix* A, const vector* b){
 	}
 	return x;
 }
+
+double vector_mag(const vector b){
+
+	// Find abs(b)^2
+	double x = vector_dot(b, b);
+
+	// Square root to find abs(b)
+	x = sqrt(x);
+	
+	return x;
+}
+
+vector vector_scalar_mult(vector b, double x){
+
+	for(int i = 1; i <= b.size; i++){
+		vget(b,i) = x * vget(b,i);
+	}
+}
+
+matrix vector_transpose(const vector x){
+	
+	matrix x_T = new_matrix(x.size,1);
+	
+	for(int i = 1; i <= x.size; i++){
+		mget(x_T,i,1) = vget(x,1);
+	}
+	return x_T;
+}
+
+double eigen_power_iteration(matrix A, vector v, double tol, int maxIters){
+	
+	// v(0) = v(0) / ||v(0)|| (normalized)
+	v = vector_scalar_mult(v,1 / (vector_transpose(b)));
+	
+	// lambda = v_T A v (initialize lambda
+	lambda = vector_dot_mult(v, matrix_vector_mult(A, v));
+
+	// Set loop conditions
+	int mstop = 0;
+	int k = 0;
+
+	while(mstop == 0){
+		// w = Av
+		vector w = matrix_vector_mult(A, v);
+		
+		// v = v / ||v||
+		v = vector_scalar_mult(w,1 / (vector_transpose(w)));
+		
+		// lambda = v_T A v
+		double lambdaOld = lambda;
+		lambda = vector_dot_mult(v, matrix_vector_mult(A, v));
+		
+		if(((lambda - lambdaOld) < TOL) | k == MaxIters){ mstop = 1; }
+	}	
+	return lambda;
+}
+
