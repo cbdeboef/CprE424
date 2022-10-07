@@ -110,7 +110,7 @@ matrix matrix_mult_v2(const matrix* A, const matrix* B){
         for(int i = 1; i <= rowsA; i++){
                 for(int j = 1; j <= colsB; j++){
                         for(int k = 1; k<= colsA; k++){
-                                mget(C,i,j) += mgetp(A,i,k) * mgetp(B_T,j,k);
+                                mget(C,i,j) += mgetp(A,i,k) * mget(B_T,j,k);
                         }
                 }
         }
@@ -287,7 +287,7 @@ vector solve(const matrix* A, const vector* b){
 double vector_mag(const vector b){
 
 	// Find abs(b)^2
-	double x = vector_dot(b, b);
+	double x = vector_dot_mult(&b, &b);
 
 	// Square root to find abs(b)
 	x = sqrt(x);
@@ -296,14 +296,17 @@ double vector_mag(const vector b){
 }
 
 vector vector_scalar_mult(vector b, double x){
-
+	
+	// multiply b by a scalar x
 	for(int i = 1; i <= b.size; i++){
 		vget(b,i) = x * vget(b,i);
 	}
+	return b;
 }
 
 matrix vector_transpose(const vector x){
-	
+	// Code to transpose a vector ([1xN] to [Nx1])
+
 	matrix x_T = new_matrix(x.size,1);
 	
 	for(int i = 1; i <= x.size; i++){
@@ -312,31 +315,86 @@ matrix vector_transpose(const vector x){
 	return x_T;
 }
 
-double eigen_power_iteration(matrix A, vector v, double tol, int maxIters){
+double eigen_power_function(matrix A, vector v, double tol, int maxIters){
+	// WARNING: A MUST BE SYMETRIC
+	// find the hightest eigenvalue using the power iteration algorithm
 	
 	// v(0) = v(0) / ||v(0)|| (normalized)
-	v = vector_scalar_mult(v,1 / (vector_transpose(b)));
-	
+	v = vector_scalar_mult(v, 1 / (vector_mag(v)));
+
+	vector temp = matrix_vector_mult(&A, &v);
+
 	// lambda = v_T A v (initialize lambda
-	lambda = vector_dot_mult(v, matrix_vector_mult(A, v));
+	double lambda = vector_dot_mult(&v, &temp);
 
 	// Set loop conditions
 	int mstop = 0;
 	int k = 0;
 
 	while(mstop == 0){
+		k++;	
+
 		// w = Av
-		vector w = matrix_vector_mult(A, v);
+		vector w = matrix_vector_mult(&A, &v);
 		
-		// v = v / ||v||
-		v = vector_scalar_mult(w,1 / (vector_transpose(w)));
+		// v = w / ||w||
+		v = vector_scalar_mult(w,1 / (vector_mag(w)));
 		
-		// lambda = v_T A v
+		// lambda = v_T A v and save old lambda to compare change
 		double lambdaOld = lambda;
-		lambda = vector_dot_mult(v, matrix_vector_mult(A, v));
+		temp = matrix_vector_mult(&A, &v);
+		lambda = vector_dot_mult(&v, &temp);
 		
-		if(((lambda - lambdaOld) < TOL) | k == MaxIters){ mstop = 1; }
+		// check if max iterations have happened or if lambda is within our tolerance of error
+		if((fabs(lambda - lambdaOld) < tol) | k == maxIters){ mstop = 1; }
 	}	
 	return lambda;
 }
 
+double eigen_shifted_inv_function(matrix A, vector v, double mu, double tol, int maxIters){
+	// WARNING: A MUST BE SYMETRIC
+	// find the eigenvalue closest to mu using the inverse power iteration algorithm
+
+	// create matrix I*mu
+	matrix I = new_matrix(A.rows,A.cols);	
+	for(int i = 1; i <= A.rows; i++){
+		for(int j = 1; j <= A.cols; j++){
+			if(i == j){ mget(I,i,j) = mu; }
+			else{ mget(I,i,j) = 0; }
+		}
+	}	
+
+
+        // v(0) = v(0) / ||v(0)|| (normalized)
+        v = vector_scalar_mult(v, 1 / (vector_mag(v)));
+
+        // lambda = v_T A v (initialize lambda) 
+	vector tempV = matrix_vector_mult(&A, &v);
+        double lambda = vector_dot_mult(&v, &tempV);
+
+        // Set loop conditions
+        int mstop = 0;
+        int k = 0;
+	
+	matrix tempM;
+
+        while(mstop == 0){
+                k++;
+		
+                // solve for w from the equation (A-muI)w = v
+		tempM = matrix_sub(&A, &I); 
+                vector w = solve(&tempM, &v);
+
+                // v = w / ||w||
+                v = vector_scalar_mult(w,1 / (vector_mag(w)));
+
+                // lambda = v_T A v and save the old lambda to compare change
+                double lambdaOld = lambda;
+                tempV = matrix_vector_mult(&A, &v);
+                lambda = vector_dot_mult(&v, &tempV);
+
+		// check if max iterations have happened or if lambda is within our tolerance of error
+                if((fabs(lambda - lambdaOld) < tol) | k == maxIters){ mstop = 1; }
+        }
+        return lambda;
+}
