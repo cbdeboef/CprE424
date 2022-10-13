@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include <time.h>
 
 typedef struct matrix matrix;
 struct matrix{
@@ -56,5 +57,8 @@ double eigen_power_function(matrix A, vector b, double tol, int maxIters);
 double eigen_shifted_inv_function(matrix A, vector b, double mu, double tol, int maxIters);
 
 matrix vector_transpose(const vector x);
+
+void delete_vector(vector* V);
+void delete_matrix(matrix* M);
 
 #endif

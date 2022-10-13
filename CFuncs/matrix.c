@@ -398,3 +398,11 @@ double eigen_shifted_inv_function(matrix A, vector v, double mu, double tol, int
         }
         return lambda;
 }
+
+void delete_matrix(matrix* M){
+	free(M);
+}
+	
+void delete_vector(vector* V){
+	free(V);
+}
