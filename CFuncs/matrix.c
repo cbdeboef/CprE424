@@ -100,8 +100,8 @@ matrix matrix_mult_v2(const matrix* A, const matrix* B){
 	
 	// Create 
 	matrix B_T = new_matrix(rowsB, colsB);
-	for(int i = 0; i <= rowsA; i++){
-		for(int j = 0; j <= colsB; j++){
+	for(int i = 1; i <= rowsA; i++){
+		for(int j = 1; j <= colsB; j++){
 			mget(B_T,i,j) = mgetp(B,j,i);
 		}
 	}
@@ -114,7 +114,7 @@ matrix matrix_mult_v2(const matrix* A, const matrix* B){
                         }
                 }
         }
-
+	delete_matrix(&B_T);
         return C;
 }
 
@@ -400,9 +400,9 @@ double eigen_shifted_inv_function(matrix A, vector v, double mu, double tol, int
 }
 
 void delete_matrix(matrix* M){
-	free(M);
+	free(M->val);
 }
 	
 void delete_vector(vector* V){
-	free(V);
+	free(V->val);
 }
