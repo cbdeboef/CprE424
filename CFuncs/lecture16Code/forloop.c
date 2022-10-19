@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 
 	const double time1 = omp_get_wtime();
 
-#	pragma omp oparallel for num_threads(thread_count)
+	#pragma omp parallel for num_threads(thread_count)
 	for(int i = 1; i <= N; i++){
 		for(int j = 1; j <= N; j++){
 			mget(m,i,j) = 1.0 / (i + j - 1);
