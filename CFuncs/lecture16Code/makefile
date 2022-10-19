@@ -1,4 +1,4 @@
-CC = gcc-11
+CC = gcc
 FFLAGS = -Wall -O3 -std=c99 -fopenmp
 LFLAGS = -lgomp
 OBJECTS = forloop.o matrix.o
