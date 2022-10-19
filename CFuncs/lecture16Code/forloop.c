@@ -3,7 +3,9 @@
 #include <time.h>
 #include "matrix.h"
 #include <math.h>
-#include <omp.h>
+#ifdef _OPENMP
+#	include <omp.h>
+#endif
 
 
 int main(int argc, char* argv[]){
