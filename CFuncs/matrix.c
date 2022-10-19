@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include <math.h>
 
 matrix new_matrix(const int rows, const int cols){
 	
