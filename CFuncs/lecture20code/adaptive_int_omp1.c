@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+#ifdef _OPENMP
+#	include <omp.h>
+#endif
 
 int main(int argc, char* argv[]){
 
@@ -73,15 +77,15 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
-void usage(cosnt char *prog_name){
+void usage(const char *prog_name){
 	fprintf(stderr, "usage: %s <num_threads> <TOL>\n", prog_name);
 	fprintf(stderr, "num_threads should be positive\n");
 	fprintf(stderr, "TOL should be positive\n");
 	exit(1);
 }
 
-double adaptiveInt(const double a, const double b, const double TOL, char* fileneame){
-	double Q(cosnt double a, const doble b);
+double adaptiveInt(const double a, const double b, const double TOL, char* filename){
+	double Q(const double a, const double b);
 	double Qab = Q(a, b);
 	const double c = 0.5 * (a+b);
 	double Qac = Q(a, c);
@@ -106,7 +110,7 @@ double adaptiveInt(const double a, const double b, const double TOL, char* filen
 
 double Q(const double a, const double b){
 	double f(const double x);
-	const double one_sixth = 1.666666666666666666666666666666666667e-01
+	const double one_sixth = 1.666666666666666666666666666666666667e-01;
 	const double c = 0.5 * (a+b);
 	return one_sixth * (b-a) * (f(a) + 4.0 * f(c)+f(b));
 }
