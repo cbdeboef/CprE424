@@ -1,10 +1,10 @@
 CC = mpicc
 FFLAGS = -O3 -Wall -std=c99
-LFLAGS =
-OBJECTS = main.o vector.o
+LFLAGS = -lm
+OBJECTS = main.o
 
 main.exe: $(OBJECTS)
-	$(CC) $(LFLAGS) $(OBJECTS) -o main.exe
+	$(CC) $(OBJECTS) $(LFLAGS) -o main.exe
 
 %.o: %.c
 	$(CC) $(FFLAGS) -c $<
