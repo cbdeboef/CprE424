@@ -1,0 +1,13 @@
+CC = gcc-11
+FFLAGS = -Wall -O3 -std=c99 -fopenmp -fopenacc
+LFLAGS = -lgomp -lm
+OBJECTS = mainOpenMP.o
+
+main.exe: $(OBJECTS)
+	$(CC) $(OBJECTS) $(LFLAGS) -o mainOpenMP.exe
+
+%.o: %.c
+	$(CC) $(FFLAGS) -c $< 
+
+clean:
+	rm -f $(OBJECTS) *.exe

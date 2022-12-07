@@ -1,0 +1,13 @@
+CC = gcc-11
+FFAGS = -03 -Wall -std=c99
+LFLAGS =
+OBJECTS = mainSerial.o
+
+main.exe: $(OBJECTS)
+	$(CC) $(LFLAGS) $(OBJECTS) -o serialMain.exe -lm
+
+%.o: %c
+	$(CC) $(FFLAGS) -c $<
+
+clean:
+	rm -f $(OBJECTS) *.exe
